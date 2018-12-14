@@ -21,14 +21,27 @@ public class KitsUtils {
 			kitConf.set("kit."+kitname+".item."+i.getItemName()+".quantity", i.getQuantity());
 			kitConf.set("kit."+kitname+".item."+i.getItemName()+".meta", i.getMeta());
 		}
-		
+		if(kitConf.contains("kit.listKit")) {
+			List<String> listKit = kitConf.getStringList("kit.listKit");
+			listKit.add(kitname);
+			kitConf.set("kit.listKit", listKit);
+		}
 		ConfigUtils.update(kitConf, ConfigUtils.getKitFile());
 	}
 	
 	public void deleteKit(String kitname) {
 		
 		kitConf.set("kit."+kitname, null);
-		
+		if(kitConf.contains("kit.listKit")) {
+			List<String> listKit = kitConf.getStringList("kit.listKit");
+			for(String s : listKit) {
+				int i = 0;
+				if(s.equalsIgnoreCase(kitname)) {
+					listKit.remove(i);
+				}
+			}
+			kitConf.set("kit.listKit", listKit);
+		}
 		ConfigUtils.update(kitConf, ConfigUtils.getKitFile());
 
 	}

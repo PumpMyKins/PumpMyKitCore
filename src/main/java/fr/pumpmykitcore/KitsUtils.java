@@ -1,5 +1,7 @@
 package fr.pumpmykitcore;
 
+import java.util.List;
+
 import org.bukkit.configuration.file.FileConfiguration;
 
 import fr.pumpmykitcore.ConfigUtils;
@@ -12,7 +14,9 @@ public class KitsUtils {
 		
 		String kitname = k.getKitname();
 		kitConf.set("kit."+kitname+".eula", k.isEula());
+		kitConf.set("kit."+kitname+".itemName", k.getItemNameList());
 		for(Item i : k.getItemList()) {
+			kitConf.set("kit."+kitname+".item", k.getItemList());
 			kitConf.set("kit."+kitname+".item."+i.getItemName()+".id", i.getId());
 			kitConf.set("kit."+kitname+".item."+i.getItemName()+".quantity", i.getQuantity());
 			kitConf.set("kit."+kitname+".item."+i.getItemName()+".meta", i.getMeta());
@@ -29,12 +33,48 @@ public class KitsUtils {
 
 	}
 	
-	public Kit updateKit(String kitname) {
+	public Kit updateKit(Kit k) {
 	
-		FileConfiguration kitConf = ConfigUtils.getKitConf();
-		Kit kit = new Kit();
-		kit.setEula(kitConf.getBoolean("kit."+kitname+".eula"));
+		String kitname = k.getKitname();
+		Kit kitAfter = k;
+		kitConf.set("kit."+kitname+".eula", k.isEula());
+		kitConf.set("kit."+kitname+".itemName", k.getItemNameList());
+		for(Item i : k.getItemList()) {
+			kitConf.set("kit."+kitname+".item", k.getItemList());
+			kitConf.set("kit."+kitname+".item."+i.getItemName()+".id", i.getId());
+			kitConf.set("kit."+kitname+".item."+i.getItemName()+".quantity", i.getQuantity());
+			kitConf.set("kit."+kitname+".item."+i.getItemName()+".meta", i.getMeta());
+		}
 		
-		return kit;
+		ConfigUtils.update(kitConf, ConfigUtils.getKitFile());
+		
+		return kitAfter;
+		
+	}
+	
+	public Kit getKit(String kitname) {
+		
+		if(ConfigUtils.getKitConf().get("kit."+kitname) == null) {
+			
+			return null; 
+		} else {
+			
+			Kit kit = new Kit();
+			kit.setEula(ConfigUtils.getKitConf().getBoolean("kit."+kitname+".eula"));
+			List<String> itemName = kitConf.getStringList("kit."+kitname+".itemName");
+			for(String name : itemName)	{
+				
+				Item i = new Item();
+				i.setId(kitConf.getString("kit."+kitname+".item."+name+".id"));
+				i.setItemName(name);
+				i.setMeta(kitConf.getInt("kit."+kitname+".item."+name+".meta"));
+				i.setQuantity(kitConf.getInt("kit."+kitname+".item."+name+".quantity"));
+				
+				kit.getItemList().add(i);
+			}
+			
+			return kit;
+		}
+		
 	}
 }

@@ -9,6 +9,7 @@ public class Kit {
 
 	private String kitname = null;
 	private boolean eula = true;
+	private List<String> itemNameList = new ArrayList<String>();
 	private List<Item> itemList= new ArrayList<Item>();
 	
 	public String getKitname() {
@@ -28,6 +29,12 @@ public class Kit {
 	}
 	public void setItemList(List<Item> itemList) {
 		this.itemList = itemList;
+	}
+	public List<String> getItemNameList() {
+		return itemNameList;
+	}
+	public void setItemNameList(List<String> itemNameList) {
+		this.itemNameList = itemNameList;
 	} 
 	
 	

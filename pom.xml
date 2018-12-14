@@ -5,5 +5,16 @@
     <artifactId>pumpmykitparent</artifactId>
     <version>1.0.0</version>
   </parent>
+  
+    	<dependencies>
+  		
+  		<dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <scope>provided</scope>
+		</dependency>
+		
+		</dependencies>
+  <packaging>war</packaging>
   <artifactId>pumpmykitcore</artifactId>
 </project>

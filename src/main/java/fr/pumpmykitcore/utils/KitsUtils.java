@@ -11,9 +11,9 @@ import fr.pumpmykitcore.obj.Kit;
 
 public class KitsUtils {
 		
-	FileConfiguration kitConf = ConfigUtils.getKitConf();
+	static FileConfiguration kitConf = ConfigUtils.getKitConf();
 	
-	public void createKit(Kit k) {
+	public static void createKit(Kit k) {
 		
 		Utils.debug(k); //DEBUG
 		String kitname = k.getKitname();
@@ -36,7 +36,7 @@ public class KitsUtils {
 		ConfigUtils.update(kitConf, ConfigUtils.getKitFile());
 	}
 	
-	public void deleteKit(String kitname) {
+	public static void deleteKit(String kitname) {
 		
 		Utils.debug(kitname); //DEBUG
 		kitConf.set("kit."+kitname, null);
@@ -77,7 +77,7 @@ public class KitsUtils {
 		
 	}
 	
-	public Kit getKit(String kitname) {
+	public static Kit getKit(String kitname) {
 		
 		Utils.debug(kitname); //DEBUG
 		if(ConfigUtils.getKitConf().get("kit."+kitname) == null) {
@@ -104,7 +104,7 @@ public class KitsUtils {
 		
 	}
 	
-	public List<Kit> getAllKit(){
+	public static List<Kit> getAllKit(){
 		
 		List<Kit> listKit = new ArrayList<Kit>();
 		for(String s : kitConf.getStringList("kit.listKit")) {

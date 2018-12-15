@@ -23,6 +23,7 @@ public class ConfigUtils {
 		} catch (IOException e) {
 
 			e.printStackTrace();
+			Utils.error(e);
 		}
 	}
 
@@ -62,6 +63,7 @@ public class ConfigUtils {
 			} catch (IOException e) {
 
 				e.printStackTrace();
+				Utils.error(e);
 				return false;
 			}
 		}
@@ -78,6 +80,7 @@ public class ConfigUtils {
 			} catch (IOException e) {
 
 				e.printStackTrace();
+				Utils.error(e);
 				return false;
 			}
 		}

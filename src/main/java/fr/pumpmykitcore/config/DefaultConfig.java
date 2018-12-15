@@ -14,6 +14,7 @@ public class DefaultConfig {
 		conf.addDefault("developmentMode", false); //For enable admin only and debug mode
 		
 		conf.addDefault("maxKit", 10);
+		conf.addDefault("AllowRandom", false);
 		
 	}
 }

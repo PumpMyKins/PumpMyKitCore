@@ -1,4 +1,4 @@
-package fr.pumpmykitcore;
+package fr.pumpmykitcore.config;
 
 import org.bukkit.configuration.file.FileConfiguration;
 

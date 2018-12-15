@@ -1,4 +1,6 @@
-package fr.pumpmykitcore;
+package fr.pumpmykitcore.utils;
+
+import fr.pumpmykitcore.config.ConfigUtils;
 
 public class Utils {
 

@@ -1,11 +1,13 @@
-package fr.pumpmykitcore;
+package fr.pumpmykitcore.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
-import fr.pumpmykitcore.ConfigUtils;
+import fr.pumpmykitcore.config.ConfigUtils;
+import fr.pumpmykitcore.obj.Item;
+import fr.pumpmykitcore.obj.Kit;
 
 public class KitsUtils {
 		

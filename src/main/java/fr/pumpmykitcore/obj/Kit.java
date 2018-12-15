@@ -1,9 +1,9 @@
-package fr.pumpmykitcore;
+package fr.pumpmykitcore.obj;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.pumpmykitcore.Item;
+import fr.pumpmykitcore.obj.Item;
 
 public class Kit {
 

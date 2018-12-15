@@ -1,4 +1,4 @@
-package fr.pumpmykitcore;
+package fr.pumpmykitcore.utils;
 
 public class ConsoleColors {
 

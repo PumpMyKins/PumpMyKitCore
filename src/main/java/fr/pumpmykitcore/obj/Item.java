@@ -1,4 +1,4 @@
-package fr.pumpmykitcore;
+package fr.pumpmykitcore.obj;
 
 public class Item {
 	

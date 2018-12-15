@@ -15,6 +15,5 @@ public class DefaultConfig {
 		
 		conf.addDefault("maxKit", 10);
 		
-		ConfigUtils.update(conf, ConfigUtils.getConfigYml());
 	}
 }

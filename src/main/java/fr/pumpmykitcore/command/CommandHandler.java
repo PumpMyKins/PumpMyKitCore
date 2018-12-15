@@ -8,7 +8,6 @@ import fr.pumpmykitcore.utils.KitsUtils;
 
 public class CommandHandler {
 
-	@SuppressWarnings("unlikely-arg-type")
 	public boolean createKit(Kit k, String p) {
 		
 		KitsUtils.createKit(k);
@@ -19,7 +18,6 @@ public class CommandHandler {
 		}
 	}
 	
-	@SuppressWarnings("unlikely-arg-type")
 	public boolean deleteKit(String k) {
 		
 		KitsUtils.deleteKit(k);

@@ -10,8 +10,8 @@ public class ConfigUtils {
 
 	public static final String CONFIG_PATH = "plugins/kit/";
 
-	private File configYml = new File(CONFIG_PATH+"config.yml");
-	private FileConfiguration configFile = YamlConfiguration.loadConfiguration(configYml);
+	private static File configYml = new File(CONFIG_PATH+"config.yml");
+	private static FileConfiguration configFile = YamlConfiguration.loadConfiguration(configYml);
 
 	private static File kitFile = new File(CONFIG_PATH + "kit.yml");
 	private static FileConfiguration kitConf = YamlConfiguration.loadConfiguration(kitFile);
@@ -56,6 +56,7 @@ public class ConfigUtils {
 		} 
 		else {
 			try {
+				DefaultConfig.defaultConfig();
 				configYml.createNewFile();
 				return true;
 			} catch (IOException e) {
@@ -82,20 +83,20 @@ public class ConfigUtils {
 		}
 	}
 
-	public File getConfigYml() {
+	public static File getConfigYml() {
 		return configYml;
 	}
 
 	public void setConfigYml(File configYml) {
-		this.configYml = configYml;
+		ConfigUtils.configYml = configYml;
 	}
 
-	public FileConfiguration getConfigFile() {
+	public static FileConfiguration getConfigFile() {
 		return configFile;
 	}
 
 	public void setConfigFile(FileConfiguration configFile) {
-		this.configFile = configFile;
+		ConfigUtils.configFile = configFile;
 	}
 
 	public static File getKitFile() {

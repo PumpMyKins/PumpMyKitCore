@@ -1,5 +1,6 @@
 package fr.pumpmykitcore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.configuration.file.FileConfiguration;
@@ -90,4 +91,15 @@ public class KitsUtils {
 		}
 		
 	}
+	
+	public List<Kit> getAllKit(){
+		
+		List<Kit> listKit = new ArrayList<Kit>();
+		for(String s : kitConf.getStringList("kit.listKit")) {
+			
+			listKit.add(getKit(s));
+		}
+		return listKit;
+	}
+
 }

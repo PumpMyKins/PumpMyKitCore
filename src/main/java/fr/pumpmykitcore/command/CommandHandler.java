@@ -8,7 +8,7 @@ import fr.pumpmykitcore.utils.KitsUtils;
 
 public class CommandHandler {
 
-	public boolean createKit(Kit k, String p) {
+	public static boolean createKit(Kit k, String p) {
 		
 		KitsUtils.createKit(k);
 		if(KitsUtils.getAllKit().contains(k.getKitname())) {
@@ -18,7 +18,7 @@ public class CommandHandler {
 		}
 	}
 	
-	public boolean deleteKit(String k) {
+	public static boolean deleteKit(String k) {
 		
 		KitsUtils.deleteKit(k);
 		if(KitsUtils.getAllKit().contains(k)) {
@@ -28,7 +28,7 @@ public class CommandHandler {
 		}
 	}
 	
-	public List<Kit> kitList() {
+	public static List<Kit> kitList() {
 		
 		return KitsUtils.getAllKit();
 	}

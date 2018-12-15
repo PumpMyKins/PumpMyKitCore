@@ -2,7 +2,7 @@ package fr.pumpmykitcore;
 
 public class Utils {
 
-	public void debug(Object k) {
+	public static void debug(Object k) {
 		
 		if(ConfigUtils.getConfigFile().getBoolean("debug") || ConfigUtils.getConfigFile().getBoolean("developmentMode")) {
 			
@@ -14,7 +14,7 @@ public class Utils {
 		}
 
 	}
-	public void error(Object k) {
+	public static void error(Object k) {
 		
 		System.out.println(ConsoleColors.RED_BOLD +"--ERROR IN PMK-KIT--");
 		

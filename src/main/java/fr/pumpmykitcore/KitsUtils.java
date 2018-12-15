@@ -13,6 +13,7 @@ public class KitsUtils {
 	
 	public void createKit(Kit k) {
 		
+		Utils.debug(k); //DEBUG
 		String kitname = k.getKitname();
 		kitConf.set("kit."+kitname+".eula", k.isEula());
 		kitConf.set("kit."+kitname+".itemName", k.getItemNameList());
@@ -26,15 +27,20 @@ public class KitsUtils {
 			List<String> listKit = kitConf.getStringList("kit.listKit");
 			listKit.add(kitname);
 			kitConf.set("kit.listKit", listKit);
+			Utils.debug(listKit); //DEBUG
 		}
+		
+		Utils.debug(kitConf); //DEBUG
 		ConfigUtils.update(kitConf, ConfigUtils.getKitFile());
 	}
 	
 	public void deleteKit(String kitname) {
 		
+		Utils.debug(kitname); //DEBUG
 		kitConf.set("kit."+kitname, null);
 		if(kitConf.contains("kit.listKit")) {
 			List<String> listKit = kitConf.getStringList("kit.listKit");
+			Utils.debug(listKit); //DEBUG
 			for(String s : listKit) {
 				int i = 0;
 				if(s.equalsIgnoreCase(kitname)) {
@@ -42,6 +48,7 @@ public class KitsUtils {
 				}
 			}
 			kitConf.set("kit.listKit", listKit);
+			Utils.debug(listKit); //DEBUG
 		}
 		ConfigUtils.update(kitConf, ConfigUtils.getKitFile());
 
@@ -49,6 +56,7 @@ public class KitsUtils {
 	
 	public Kit updateKit(Kit k) {
 	
+		Utils.debug(k); //DEBUG
 		String kitname = k.getKitname();
 		Kit kitAfter = k;
 		kitConf.set("kit."+kitname+".eula", k.isEula());
@@ -59,7 +67,8 @@ public class KitsUtils {
 			kitConf.set("kit."+kitname+".item."+i.getItemName()+".quantity", i.getQuantity());
 			kitConf.set("kit."+kitname+".item."+i.getItemName()+".meta", i.getMeta());
 		}
-		
+		Utils.debug(kitConf); //DEBUG
+		Utils.debug(k); //DEBUG
 		ConfigUtils.update(kitConf, ConfigUtils.getKitFile());
 		
 		return kitAfter;
@@ -68,6 +77,7 @@ public class KitsUtils {
 	
 	public Kit getKit(String kitname) {
 		
+		Utils.debug(kitname); //DEBUG
 		if(ConfigUtils.getKitConf().get("kit."+kitname) == null) {
 			
 			return null; 
@@ -86,7 +96,7 @@ public class KitsUtils {
 				
 				kit.getItemList().add(i);
 			}
-			
+			Utils.debug(kit); //DEBUG
 			return kit;
 		}
 		
@@ -99,6 +109,8 @@ public class KitsUtils {
 			
 			listKit.add(getKit(s));
 		}
+		Utils.debug(listKit); //DEBUG
+
 		return listKit;
 	}
 

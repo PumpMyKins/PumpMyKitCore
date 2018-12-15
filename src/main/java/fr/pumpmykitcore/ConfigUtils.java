@@ -32,8 +32,9 @@ public class ConfigUtils {
 		try {
 			newConf.save(file);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
+			Utils.error(e);
 		}
 	}
 	

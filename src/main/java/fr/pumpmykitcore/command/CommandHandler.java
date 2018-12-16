@@ -8,14 +8,18 @@ import fr.pumpmykitcore.utils.KitsUtils;
 
 public class CommandHandler {
 
+	
 	public static boolean createKit(Kit k, String p) {
 		
-		KitsUtils.createKit(k);
-		if(KitsUtils.getAllKit().contains(k.getKitname())) {
-			return true;
-		} else {
-			return false;
+		if(!KitsUtils.getAllKit().contains(k.getKitname())) {
+			KitsUtils.createKit(k);
+			if(KitsUtils.getAllKit().contains(k.getKitname())) {
+				return true;
+			} else {
+				return false;
+			}
 		}
+		return false;
 	}
 	
 	public static boolean deleteKit(String k) {

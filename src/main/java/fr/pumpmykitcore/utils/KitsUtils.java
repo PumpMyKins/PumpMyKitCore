@@ -19,6 +19,7 @@ public class KitsUtils {
 		String kitname = k.getKitname();
 		kitConf.set("kit."+kitname+".eula", k.isEula());
 		kitConf.set("kit."+kitname+".itemName", k.getItemNameList());
+		kitConf.set("kit."+kitname+".xp", k.getXp());
 		for(Item i : k.getItemList()) {
 			kitConf.set("kit."+kitname+".item", k.getItemList());
 			kitConf.set("kit."+kitname+".item."+i.getItemName()+".id", i.getId());
@@ -63,6 +64,7 @@ public class KitsUtils {
 		Kit kitAfter = k;
 		kitConf.set("kit."+kitname+".eula", k.isEula());
 		kitConf.set("kit."+kitname+".itemName", k.getItemNameList());
+		kitConf.set("kit."+kitname+".xp", k.getXp());
 		for(Item i : k.getItemList()) {
 			kitConf.set("kit."+kitname+".item", k.getItemList());
 			kitConf.set("kit."+kitname+".item."+i.getItemName()+".id", i.getId());
@@ -86,6 +88,8 @@ public class KitsUtils {
 		} else {
 			
 			Kit kit = new Kit();
+			kit.setKitname(kitname);
+			kit.setXp(ConfigUtils.getKitConf().getInt("kit."+kitname+".xp"));
 			kit.setEula(ConfigUtils.getKitConf().getBoolean("kit."+kitname+".eula"));
 			List<String> itemName = kitConf.getStringList("kit."+kitname+".itemName");
 			for(String name : itemName)	{

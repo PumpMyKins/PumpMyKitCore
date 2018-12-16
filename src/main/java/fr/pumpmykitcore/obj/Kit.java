@@ -11,6 +11,7 @@ public class Kit {
 	private boolean eula = true;
 	private List<String> itemNameList = new ArrayList<String>();
 	private List<Item> itemList= new ArrayList<Item>();
+	private int xp;
 	
 	public String getKitname() {
 		return kitname;
@@ -23,6 +24,12 @@ public class Kit {
 	}
 	public void setEula(boolean eula) {
 		this.eula = eula;
+	}
+	public int getXp() {
+		return xp;
+	}
+	public void setXp(int xp) {
+		this.xp = xp;
 	}
 	public List<Item> getItemList() {
 		return itemList;

@@ -1,5 +1,6 @@
 package fr.pumpmykitcore.utils;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import fr.pumpmykitcore.obj.Kit;
 public class KitsUtils {
 		
 	static FileConfiguration kitConf = ConfigUtils.getKitConf();
+	
+	static FileConfiguration buyConf = ConfigUtils.getBuyConf();
 	
 	public static void createKit(Kit k) {
 		
@@ -118,6 +121,16 @@ public class KitsUtils {
 		Utils.debug(listKit); //DEBUG
 
 		return listKit;
+	}
+	
+	public void kitBuyLog(String buyerUuid, String kitname, Timestamp date, String idPurchase) {
+		
+		buyConf.set("kit."+idPurchase+".buyer", buyerUuid);
+		buyConf.set("kit."+idPurchase+".kitname", kitname);
+		buyConf.set("kit."+idPurchase+".data", date);
+		
+		ConfigUtils.update(buyConf, ConfigUtils.getBuyFile());
+		
 	}
 
 }

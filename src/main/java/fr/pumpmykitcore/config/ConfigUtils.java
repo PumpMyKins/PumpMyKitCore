@@ -17,6 +17,9 @@ public class ConfigUtils {
 
 	private static File kitFile = new File(CONFIG_PATH + "kit.yml");
 	private static FileConfiguration kitConf = YamlConfiguration.loadConfiguration(kitFile);
+
+	private static File buyFile = new File(CONFIG_PATH + "buy.yml");
+	private static FileConfiguration buyConf = YamlConfiguration.loadConfiguration(buyFile);
 	
 	public void save(FileConfiguration configFile, File configYml) {
 
@@ -88,7 +91,24 @@ public class ConfigUtils {
 			}
 		}
 	}
-
+	
+	public boolean initBuyFile() {
+		
+		if(kitFile.exists()) {
+			return true;
+		} else {
+			try {
+				kitFile.createNewFile();
+				return true;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				Utils.error(e);
+				e.printStackTrace();
+				return false;
+			}
+		}
+	}
+	
 	public static File getConfigYml() {
 		return configYml;
 	}
@@ -120,6 +140,23 @@ public class ConfigUtils {
 	public void setKitConf(FileConfiguration kitConf) {
 		ConfigUtils.kitConf = kitConf;
 	}
+
+	public static FileConfiguration getBuyConf() {
+		return buyConf;
+	}
+
+	public static void setBuyConf(FileConfiguration buyConf) {
+		ConfigUtils.buyConf = buyConf;
+	}
+
+	public static File getBuyFile() {
+		return buyFile;
+	}
+
+	public static void setBuyFile(File buyFile) {
+		ConfigUtils.buyFile = buyFile;
+	}
+	
 	
 	
 }

@@ -123,7 +123,7 @@ public class KitsUtils {
 		return listKit;
 	}
 	
-	public void kitBuyLog(String buyerUuid, String kitname, Timestamp date, String idPurchase) {
+	public static void kitBuyLog(String buyerUuid, String kitname, Timestamp date, String idPurchase) {
 		
 		buyConf.set("kit."+idPurchase+".buyer", buyerUuid);
 		buyConf.set("kit."+idPurchase+".kitname", kitname);

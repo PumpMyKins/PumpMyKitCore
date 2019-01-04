@@ -1,7 +1,9 @@
 package fr.pumpmykitcore.utils;
 
+import java.util.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.bukkit.configuration.file.FileConfiguration;
@@ -145,7 +147,7 @@ public class KitsUtils {
 		buyConf.set("kitbuylist", kitbuylist);
 		buyConf.set("kit."+idPurchase+".buyer", buyerUuid);
 		buyConf.set("kit."+idPurchase+".kitname", kitname);
-		buyConf.set("kit."+idPurchase+".date", date);
+		buyConf.set("kit."+idPurchase+".date", date.toString());
 		List<String> takenby = new ArrayList<String>();
 		buyConf.set("kit."+idPurchase+".takenby", takenby);
 		
@@ -158,12 +160,19 @@ public class KitsUtils {
 		int usability = 0;
 		for(String purchaseid : buyConf.getStringList("kitbuylist")) {
 			if(buyConf.getString("kit."+purchaseid+".kitname").equals(kitname) && !buyConf.getStringList("kit."+purchaseid+".takenby").contains(uuid)) {
-				if(getKit(kitname).isEula()) {
-					if(buyConf.getString("kit."+purchaseid+".buyer").equals(uuid)) {
+				Timestamp date = Timestamp.valueOf(buyConf.getString("kit."+purchaseid+".date"));
+				Calendar cal = Calendar.getInstance();
+				cal.setTimeInMillis(date.getTime());
+				cal.add(Calendar.HOUR, 2);
+				date = new Timestamp(cal.getTime().getTime());
+				if(date.before(new Timestamp(System.currentTimeMillis()))) {
+					if(getKit(kitname).isEula()) {
+						if(buyConf.getString("kit."+purchaseid+".buyer").equals(uuid)) {
+							usability++;
+						}
+					} else {
 						usability++;
 					}
-				} else {
-					usability++;
 				}
 			}
 		}
@@ -176,18 +185,34 @@ public class KitsUtils {
 			if(buyConf.getString("kit."+purchaseid+".kitname").equals(kitname) && !buyConf.getStringList("kit."+purchaseid+".takenby").contains(uuid)) {
 				if(getKit(kitname).isEula()) {
 					if(buyConf.getString("kit."+purchaseid+".buyer").equals(uuid)) {
+						Timestamp date = Timestamp.valueOf(buyConf.getString("kit."+purchaseid+".date"));
+						Calendar cal = Calendar.getInstance();
+						cal.setTimeInMillis(date.getTime());
+						cal.add(Calendar.HOUR, 2);
+						date = new Timestamp(cal.getTime().getTime());
+						if(date.before(new Timestamp(System.currentTimeMillis()))) {
+							
+							List<String> kitbuylist = buyConf.getStringList("kit."+purchaseid+".kitbuylist");
+							kitbuylist.add(uuid);
+							buyConf.set("kit."+purchaseid+".takenby", kitbuylist);
+							ConfigUtils.update(buyConf, ConfigUtils.getBuyFile());
+							return true;
+						}
+					}
+				} else {
+					Timestamp date = Timestamp.valueOf(buyConf.getString("kit."+purchaseid+".date"));
+					Calendar cal = Calendar.getInstance();
+					cal.setTimeInMillis(date.getTime());
+					cal.add(Calendar.HOUR, 2);
+					date = new Timestamp(cal.getTime().getTime());
+					if(date.before(new Timestamp(System.currentTimeMillis()))) {
+						
 						List<String> kitbuylist = buyConf.getStringList("kit."+purchaseid+".kitbuylist");
 						kitbuylist.add(uuid);
 						buyConf.set("kit."+purchaseid+".takenby", kitbuylist);
 						ConfigUtils.update(buyConf, ConfigUtils.getBuyFile());
 						return true;
 					}
-				} else {
-					List<String> kitbuylist = buyConf.getStringList("kit."+purchaseid+".kitbuylist");
-					kitbuylist.add(uuid);
-					buyConf.set("kit."+purchaseid+".takenby", kitbuylist);
-					ConfigUtils.update(buyConf, ConfigUtils.getBuyFile());
-					return true;
 				}
 			}
 		}

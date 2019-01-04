@@ -8,12 +8,9 @@ public class DefaultConfig {
 	
 	public static void defaultConfig() {
 		
-		conf.addDefault("force.eula", false);
-		conf.addDefault("debug", false); //Enable debug mode in the chat and in the console
-		conf.addDefault("adminOnly", false); //Only Op player will be able to take kit
-		conf.addDefault("developmentMode", false); //For enable admin only and debug mode
+		conf.addDefault("force.eula", true);
+		conf.addDefault("developmentMode", false); //To enable debug mode
 		
-		conf.addDefault("maxKit", 10);
 		conf.addDefault("AllowRandom", false);
 		
 	}

@@ -18,26 +18,33 @@ public class KitsUtils {
 	
 	public static void createKit(Kit k) {
 		
-		Utils.debug(k); //DEBUG
-		String kitname = k.getKitname();
-		kitConf.set("kit."+kitname+".eula", k.isEula());
-		kitConf.set("kit."+kitname+".itemName", k.getItemNameList());
-		kitConf.set("kit."+kitname+".xp", k.getXp());
-		for(Item i : k.getItemList()) {
-			kitConf.set("kit."+kitname+".item", k.getItemList());
-			kitConf.set("kit."+kitname+".item."+i.getItemName()+".id", i.getId());
-			kitConf.set("kit."+kitname+".item."+i.getItemName()+".quantity", i.getQuantity());
-			kitConf.set("kit."+kitname+".item."+i.getItemName()+".meta", i.getMeta());
+		if(!kitConf.getStringList("kit.listKit").contains(k.getKitname())) {
+			Utils.debug(k); //DEBUG
+			String kitname = k.getKitname();
+			if(ConfigUtils.getConfigFile().getBoolean("force.eula")) {
+				k.setEula(true);
+			}
+			kitConf.set("kit."+kitname+".eula", k.isEula());
+			kitConf.set("kit."+kitname+".itemName", k.getItemNameList());
+			kitConf.set("kit."+kitname+".xp", k.getXp());
+			for(Item i : k.getItemList()) {
+				kitConf.set("kit."+kitname+".item", k.getItemList());
+				kitConf.set("kit."+kitname+".item."+i.getItemName()+".id", i.getId());
+				kitConf.set("kit."+kitname+".item."+i.getItemName()+".quantity", i.getQuantity());
+				kitConf.set("kit."+kitname+".item."+i.getItemName()+".meta", i.getMeta());
+			}
+			if(kitConf.contains("kit.listKit")) {
+				List<String> listKit = kitConf.getStringList("kit.listKit");
+				listKit.add(kitname);
+				kitConf.set("kit.listKit", listKit);
+				Utils.debug(listKit); //DEBUG
+			}
+			
+			Utils.debug(kitConf); //DEBUG
+			ConfigUtils.update(kitConf, ConfigUtils.getKitFile());
+		} else {
+			Utils.error("Kit Already Exist");
 		}
-		if(kitConf.contains("kit.listKit")) {
-			List<String> listKit = kitConf.getStringList("kit.listKit");
-			listKit.add(kitname);
-			kitConf.set("kit.listKit", listKit);
-			Utils.debug(listKit); //DEBUG
-		}
-		
-		Utils.debug(kitConf); //DEBUG
-		ConfigUtils.update(kitConf, ConfigUtils.getKitFile());
 	}
 	
 	public static void deleteKit(String kitname) {
@@ -55,6 +62,8 @@ public class KitsUtils {
 			}
 			kitConf.set("kit.listKit", listKit);
 			Utils.debug(listKit); //DEBUG
+		} else {
+			Utils.error("Kit doesn't exist");
 		}
 		ConfigUtils.update(kitConf, ConfigUtils.getKitFile());
 
@@ -65,6 +74,9 @@ public class KitsUtils {
 		Utils.debug(k); //DEBUG
 		String kitname = k.getKitname();
 		Kit kitAfter = k;
+		if(ConfigUtils.getConfigFile().getBoolean("force.eula")) {
+			k.setEula(true);
+		}
 		kitConf.set("kit."+kitname+".eula", k.isEula());
 		kitConf.set("kit."+kitname+".itemName", k.getItemNameList());
 		kitConf.set("kit."+kitname+".xp", k.getXp());
@@ -105,6 +117,9 @@ public class KitsUtils {
 				
 				kit.getItemList().add(i);
 			}
+			if(ConfigUtils.getConfigFile().getBoolean("force.eula")) {
+				kit.setEula(true);
+			}
 			Utils.debug(kit); //DEBUG
 			return kit;
 		}
@@ -125,12 +140,67 @@ public class KitsUtils {
 	
 	public static void kitBuyLog(String buyerUuid, String kitname, Timestamp date, String idPurchase) {
 		
+		List<String> kitbuylist = buyConf.getStringList("kitbuylist");
+		kitbuylist.add(idPurchase);
+		buyConf.set("kitbuylist", kitbuylist);
 		buyConf.set("kit."+idPurchase+".buyer", buyerUuid);
 		buyConf.set("kit."+idPurchase+".kitname", kitname);
-		buyConf.set("kit."+idPurchase+".data", date);
+		buyConf.set("kit."+idPurchase+".date", date);
+		List<String> takenby = new ArrayList<String>();
+		buyConf.set("kit."+idPurchase+".takenby", takenby);
 		
 		ConfigUtils.update(buyConf, ConfigUtils.getBuyFile());
 		
+	}
+	
+	public static int getNumberOfUse(String uuid, String kitname) {
+
+		int usability = 0;
+		for(String purchaseid : buyConf.getStringList("kitbuylist")) {
+			if(buyConf.getString("kit."+purchaseid+".kitname").equals(kitname) && !buyConf.getStringList("kit."+purchaseid+".takenby").contains(uuid)) {
+				if(getKit(kitname).isEula()) {
+					if(buyConf.getString("kit."+purchaseid+".buyer").equals(uuid)) {
+						usability++;
+					}
+				} else {
+					usability++;
+				}
+			}
+		}
+		return usability;
+	}
+	
+	public static Boolean useKit(String uuid, String kitname) {
+		
+		for(String purchaseid : buyConf.getStringList("kitbuylist")) {
+			if(buyConf.getString("kit."+purchaseid+".kitname").equals(kitname) && !buyConf.getStringList("kit."+purchaseid+".takenby").contains(uuid)) {
+				if(getKit(kitname).isEula()) {
+					if(buyConf.getString("kit."+purchaseid+".buyer").equals(uuid)) {
+						List<String> kitbuylist = buyConf.getStringList("kit."+purchaseid+".kitbuylist");
+						kitbuylist.add(uuid);
+						buyConf.set("kit."+purchaseid+".takenby", kitbuylist);
+						ConfigUtils.update(buyConf, ConfigUtils.getBuyFile());
+						return true;
+					}
+				} else {
+					List<String> kitbuylist = buyConf.getStringList("kit."+purchaseid+".kitbuylist");
+					kitbuylist.add(uuid);
+					buyConf.set("kit."+purchaseid+".takenby", kitbuylist);
+					ConfigUtils.update(buyConf, ConfigUtils.getBuyFile());
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public static Boolean canUse(String uuid, String kitname) {
+		
+		if(getNumberOfUse(uuid, kitname) > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

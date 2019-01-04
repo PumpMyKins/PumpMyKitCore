@@ -39,7 +39,7 @@ public class CommandHandler {
 		return KitsUtils.getAllKit();
 	}
 	
-	public Kit randomKit() {
+	public static Kit randomKit() {
 		
 		Kit n = null;
 		if(ConfigUtils.getConfigFile().getBoolean("AllowRandom")) {

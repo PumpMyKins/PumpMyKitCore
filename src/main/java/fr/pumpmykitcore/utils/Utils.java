@@ -18,10 +18,10 @@ public class Utils {
 	}
 	public static void error(Object k) {
 		
-		System.out.println(ConsoleColors.RED_BOLD +"--ERROR IN PMK-KIT--");
+		System.out.println(ConsoleColors.RED_BOLD +"--ERROR IN PMK-KIT--" + ConsoleColors.RESET);
 		
-		System.out.println(ConsoleColors.RED_BACKGROUND + k.toString());
+		System.out.println(ConsoleColors.RED_BACKGROUND + k.toString() + ConsoleColors.RESET);
 		
-		System.out.println(ConsoleColors.RED_BOLD +"--END OF DEBUG MESSAGE--");
+		System.out.println(ConsoleColors.RED_BOLD +"--END OF DEBUG MESSAGE--" + ConsoleColors.RESET);
 	}
 }

@@ -9,8 +9,8 @@ public class DefaultConfig {
 	public static void defaultConfig() {
 		
 		conf.addDefault("force.eula", true);
-		conf.addDefault("developmentMode", false); //To enable debug mode
-		
+		conf.addDefault("developmentMode", true); //To enable debug mode
+
 		conf.addDefault("AllowRandom", false);
 		
 	}

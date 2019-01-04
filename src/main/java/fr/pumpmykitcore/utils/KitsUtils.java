@@ -1,6 +1,5 @@
 package fr.pumpmykitcore.utils;
 
-import java.util.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,7 +20,6 @@ public class KitsUtils {
 	public static void createKit(Kit k) {
 		
 		if(!kitConf.getStringList("kit.listKit").contains(k.getKitname())) {
-			Utils.debug(k); //DEBUG
 			String kitname = k.getKitname();
 			if(ConfigUtils.getConfigFile().getBoolean("force.eula")) {
 				k.setEula(true);
@@ -39,10 +37,8 @@ public class KitsUtils {
 				List<String> listKit = kitConf.getStringList("kit.listKit");
 				listKit.add(kitname);
 				kitConf.set("kit.listKit", listKit);
-				Utils.debug(listKit); //DEBUG
 			}
 			
-			Utils.debug(kitConf); //DEBUG
 			ConfigUtils.update(kitConf, ConfigUtils.getKitFile());
 		} else {
 			Utils.error("Kit Already Exist");
@@ -51,11 +47,9 @@ public class KitsUtils {
 	
 	public static void deleteKit(String kitname) {
 		
-		Utils.debug(kitname); //DEBUG
 		kitConf.set("kit."+kitname, null);
 		if(kitConf.contains("kit.listKit")) {
 			List<String> listKit = kitConf.getStringList("kit.listKit");
-			Utils.debug(listKit); //DEBUG
 			for(String s : listKit) {
 				int i = 0;
 				if(s.equalsIgnoreCase(kitname)) {
@@ -63,7 +57,6 @@ public class KitsUtils {
 				}
 			}
 			kitConf.set("kit.listKit", listKit);
-			Utils.debug(listKit); //DEBUG
 		} else {
 			Utils.error("Kit doesn't exist");
 		}
@@ -73,7 +66,6 @@ public class KitsUtils {
 	
 	public Kit updateKit(Kit k) {
 	
-		Utils.debug(k); //DEBUG
 		String kitname = k.getKitname();
 		Kit kitAfter = k;
 		if(ConfigUtils.getConfigFile().getBoolean("force.eula")) {
@@ -88,8 +80,7 @@ public class KitsUtils {
 			kitConf.set("kit."+kitname+".item."+i.getItemName()+".quantity", i.getQuantity());
 			kitConf.set("kit."+kitname+".item."+i.getItemName()+".meta", i.getMeta());
 		}
-		Utils.debug(kitConf); //DEBUG
-		Utils.debug(k); //DEBUG
+
 		ConfigUtils.update(kitConf, ConfigUtils.getKitFile());
 		
 		return kitAfter;
@@ -98,7 +89,6 @@ public class KitsUtils {
 	
 	public static Kit getKit(String kitname) {
 		
-		Utils.debug(kitname); //DEBUG
 		if(ConfigUtils.getKitConf().get("kit."+kitname) == null) {
 			
 			return null; 
@@ -122,7 +112,6 @@ public class KitsUtils {
 			if(ConfigUtils.getConfigFile().getBoolean("force.eula")) {
 				kit.setEula(true);
 			}
-			Utils.debug(kit); //DEBUG
 			return kit;
 		}
 		
@@ -135,7 +124,6 @@ public class KitsUtils {
 			
 			listKit.add(getKit(s));
 		}
-		Utils.debug(listKit); //DEBUG
 
 		return listKit;
 	}

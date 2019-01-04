@@ -15,6 +15,5 @@
 		</dependency>
 		
 		</dependencies>
-  <packaging>war</packaging>
   <artifactId>pumpmykitcore</artifactId>
 </project>

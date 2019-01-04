@@ -8,11 +8,11 @@ public class Utils {
 		
 		if(ConfigUtils.getConfigFile().getBoolean("debug") || ConfigUtils.getConfigFile().getBoolean("developmentMode")) {
 			
-			System.out.println(ConsoleColors.RED +"--DEBUG MODE ENABLE IN PMK-KIT--");
+			System.out.println(ConsoleColors.RED +"--DEBUG MODE ENABLE IN PMK-KIT--" + ConsoleColors.RESET);
 			
-			System.out.println(ConsoleColors.RESET + k.toString());
+			System.out.println(ConsoleColors.RESET +ConsoleColors.RESET);
 			
-			System.out.println(ConsoleColors.RED +"--END OF DEBUG MESSAGE--");
+			System.out.println(ConsoleColors.RED +"--END OF DEBUG MESSAGE--" +ConsoleColors.RESET);
 		}
 
 	}

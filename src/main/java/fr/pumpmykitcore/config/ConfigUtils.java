@@ -21,6 +21,22 @@ public class ConfigUtils {
 	private static File buyFile = new File(CONFIG_PATH + "buy.yml");
 	private static FileConfiguration buyConf = YamlConfiguration.loadConfiguration(buyFile);
 	
+	public static void init() {
+		
+		initFolder();
+		initConfigFile();
+		initKitFile();
+		initBuyFile();
+		defaultConfig();
+	}
+	
+	private static void defaultConfig() {
+		
+		configFile.addDefault("force.eula", false);
+		configFile.addDefault("developmentMode", false); //To enable debug mode
+		configFile.addDefault("AllowRandom", false);
+	}
+
 	public void save(FileConfiguration configFile, File configYml) {
 
 		try {
@@ -43,7 +59,7 @@ public class ConfigUtils {
 		}
 	}
 	
-	public void initFolder() {
+	public static void initFolder() {
 
 		File file = new File(CONFIG_PATH);
 		if(!file.exists()) {
@@ -56,7 +72,7 @@ public class ConfigUtils {
 			initKitFile();
 		}
 	}
-	public boolean initConfigFile() {
+	public static boolean initConfigFile() {
 
 		if(configYml.exists()) {
 			return true;
@@ -75,7 +91,7 @@ public class ConfigUtils {
 		}
 	}
 	
-	public boolean initKitFile() {
+	public static boolean initKitFile() {
 		
 		if(kitFile.exists()) {
 			return true;
@@ -92,13 +108,13 @@ public class ConfigUtils {
 		}
 	}
 	
-	public boolean initBuyFile() {
+	public static boolean initBuyFile() {
 		
-		if(kitFile.exists()) {
+		if(buyFile.exists()) {
 			return true;
 		} else {
 			try {
-				kitFile.createNewFile();
+				buyFile.createNewFile();
 				return true;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
